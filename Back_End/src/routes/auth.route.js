@@ -2,6 +2,6 @@ const { authenticateUser } = require('../controllers/auth.controller');
 
 const router = require('express').Router();
 
-router.get("/auth", authenticateUser);
+router.post("/callback", authenticateUser);
 
 module.exports = router;

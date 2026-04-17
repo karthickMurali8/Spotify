@@ -2,7 +2,7 @@ const { clerkClient, clerkMiddleware, getAuth } = require('@clerk/express');
 const fileUpload = require('express-fileupload');
 
 const express = require('express');
-// const cors = require('cors');
+const cors = require('cors');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/user.route');
 const authRoutes = require('./routes/auth.route');
@@ -16,6 +16,11 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true,
+}));
 
 connectDB();
 app.listen(port, () => {
