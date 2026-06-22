@@ -3,7 +3,7 @@ const User = require("../models/user.model");
 const getAllUsers = async (req, res, next) => {
     try {
         // const users = await clerkClient.users.getUserList();
-        const currentUserId = req.auth.userId;
+        const currentUserId = req.auth().userId;
         const users = await User.find({ clerkId: { $ne: currentUserId } });
         res.status(200).json(users);
     } catch (error) {

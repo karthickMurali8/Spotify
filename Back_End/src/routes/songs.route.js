@@ -6,7 +6,7 @@ const router = require('express').Router();
 // only admins can view all songs (for admin management purposes)
 router.get("/getAll", protectedRoute, isAdmin, getAllSongs);
 
-router.get("/getFeatures", featuredSongs);
+router.get("/getFeatured", featuredSongs);
 router.get("/getTopCharts", topCharts);
 router.get("/getMadeForYou", madeForYou);
 

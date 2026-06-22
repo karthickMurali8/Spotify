@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "dev_start": "nodemon --inspect src/server.js",
+    "seed_songs": "node src/seeds/songs.js",
+    "seed_albums": "node src/seeds/albums.js"
   },
   "keywords": [],
   "author": "",
