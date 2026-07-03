@@ -12,7 +12,7 @@ interface MusicStore {
     featuredSongs: Song[];
     madeForYouSongs: Song[];
     trendingSongs: Song[];
-    stats: Stats | null;
+    stats: Stats;
 
     fetchAlbums: () => Promise<void>;
     fetchAlbumById: (id: string) => Promise<void>;

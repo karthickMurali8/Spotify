@@ -1,6 +1,6 @@
-import { AuthenticateWithRedirectCallback, SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react'
+import { AuthenticateWithRedirectCallback } from '@clerk/clerk-react'
 import './App.css'
-import { Button } from './components/ui/button'
+// import { Button } from './components/ui/button'
 import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/home/HomePage'
 import AuthCallBack from './pages/auth/AuthCallBack'

@@ -1,6 +1,6 @@
 import FeaturedGridSkeleton from '@/components/skeletons/FeaturedGridSkeleton';
 import { UseMusicStore } from '@/stores/UseMusicStore';
-import React from 'react'
+// import React from 'react'
 import PlayButton from './PlayButton';
 
 const FeaturedSection = () => {

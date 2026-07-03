@@ -1,0 +1,22 @@
+{
+  "name": "spotify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm install --prefix Back_End && npm install --prefix Front_End && npm run build --prefix Front_End",
+    "start": "npm start --prefix Back_End"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karthickMurali8/Spotify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/karthickMurali8/Spotify/issues"
+  },
+  "homepage": "https://github.com/karthickMurali8/Spotify#readme"
+}
