@@ -2,7 +2,7 @@ const Song = require("../models/song.model");
 const Album = require("../models/album.model");
 
 // const { uploadToCloudinary } = require("../utils/cloudinary.util");
-const { cloudinary } = require("../lib/cloudinary");
+const cloudinary = require("../lib/cloudinary");
 
 const uploadToCloud = async (file) => {
     try {

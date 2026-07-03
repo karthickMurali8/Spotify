@@ -5,11 +5,11 @@ const User = require("../models/user.model");
 
 const getStats = async (req, res, next) => {
     try {
-        // const totalusers = await User.countDocuments();
-        // const totalsongs = await Song.countDocuments();
+        // const totalUsers = await User.countDocuments();
+        // const totalSongs = await Song.countDocuments();
         // const totalAlbums = await Album.countDocuments();
 
-        const [totalusers, totalsongs, totalAlbums, totalArtists] = await Promise.all([
+        const [totalUsers, totalSongs, totalAlbums, totalArtists] = await Promise.all([
             User.countDocuments(),
             Song.countDocuments(),
             Album.countDocuments(),
@@ -31,7 +31,7 @@ const getStats = async (req, res, next) => {
                 }
             ])
         ]);
-        res.status(200).json({ totalusers, totalsongs, totalAlbums, totalArtists: totalArtists[0]?.count || 0 });
+        res.status(200).json({ totalUsers, totalSongs, totalAlbums, totalArtists: totalArtists[0]?.count || 0 });
     } catch (error) {
         console.error("Error in getStats controller:", error);
         next(error);

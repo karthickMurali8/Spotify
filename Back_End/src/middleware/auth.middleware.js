@@ -1,5 +1,7 @@
+const { clerkClient } = require("@clerk/express");
+
 const protectedRoute = (req, res, next) => {
-  if (req.auth && req.auth.userId) {
+  if (req.auth() && req.auth().userId) {
     // User is authenticated, proceed to the next middleware or route handler
     next();
   } else {
@@ -10,7 +12,7 @@ const protectedRoute = (req, res, next) => {
 
 const isAdmin = async(req, res, next) => {
     try {
-        const user = await clerkClient.users.getUser(req.auth.userId);
+        const user = await clerkClient.users.getUser(req.auth().userId);
         // const isAdmin = user.primary_email_address === process.env.ADMIN_EMAIL; // Check if the user's email matches the admin email
         const isAdmin = user.primaryEmailAddress?.emailAddress === process.env.ADMIN_EMAIL; // Check if the user's email matches the admin email
         if (!isAdmin) {
