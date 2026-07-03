@@ -4,8 +4,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn } from '@/lib/utils'
 import { UseMusicStore } from '@/stores/UseMusicStore'
 import { SignedIn } from '@clerk/clerk-react'
-import { HomeIcon, Library, MessageCircle, Scroll } from 'lucide-react'
-import React, { use, useEffect } from 'react'
+import { HomeIcon, Library, MessageCircle } from 'lucide-react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const LeftSideBar = () => {

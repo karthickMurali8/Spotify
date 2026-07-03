@@ -1,6 +1,6 @@
 import { useUser } from '@clerk/clerk-react';
 import { HeadphonesIcon, Music, Users } from 'lucide-react';
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { ScrollArea } from './ui/scroll-area';
 import { UseChatStore } from '@/stores/UseChatStore';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';

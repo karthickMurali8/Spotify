@@ -24,7 +24,10 @@ interface ChatStore {
     fetchMessages: (userId: string) => Promise<void>;
 }
 
-const socket = io(import.meta.env.VITE_BACKEND_URL, {
+// const baseUrl = import.meta.env.MODE === "development" ? import.meta.env.VITE_BACKEND_URL : "/";
+const baseUrl = import.meta.env.MODE === "development" ? "http://localhost:3000" : "/";
+
+const socket = io(baseUrl, {
     autoConnect: false,
     withCredentials: true
 })

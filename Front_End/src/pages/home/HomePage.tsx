@@ -1,4 +1,4 @@
-import FeaturedGridSkeleton from "@/components/skeletons/FeaturedGridSkeleton";
+// import FeaturedGridSkeleton from "@/components/skeletons/FeaturedGridSkeleton";
 import Topbar from "@/components/Topbar"
 import { UseMusicStore } from "@/stores/UseMusicStore";
 import { useEffect } from "react";
