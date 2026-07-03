@@ -9,7 +9,7 @@ const authenticateUser = async (req, res, next) => {
       // sign up
       const newUser = new User({
         clerkId: id,
-        fullName :`${firstName} ${lastName}`,
+        fullName :`${firstName || ''} ${lastName || ''}`.trim(),
         imageUrl
       });
     //   await newUser.save();

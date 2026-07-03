@@ -11,11 +11,16 @@ const songsRoutes = require('./routes/songs.route');
 const albumsRoutes = require('./routes/albums.route');
 const statsRoutes = require('./routes/stats.route');
 const connectDB = require('./lib/db');
+const initializeSocket = require('./lib/socket');
+const createServer = require('http').createServer;
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
+
+const httpServer = createServer(app);
+initializeSocket(httpServer);
 
 app.use(cors({
   origin: process.env.FRONTEND_URL,
@@ -23,7 +28,7 @@ app.use(cors({
 }));
 
 connectDB();
-app.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 

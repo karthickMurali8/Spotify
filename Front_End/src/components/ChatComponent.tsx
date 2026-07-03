@@ -2,18 +2,18 @@ import { useUser } from '@clerk/clerk-react';
 import { HeadphonesIcon, Music, Users } from 'lucide-react';
 import React, { useEffect } from 'react'
 import { ScrollArea } from './ui/scroll-area';
-import { Avatar } from 'radix-ui';
 import { UseChatStore } from '@/stores/UseChatStore';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const ChatComponent = () => {
-    const { users, getUsers, isLoading, error } = UseChatStore();
+    const { users, fetchUsers, onlineUsers, userActivities } = UseChatStore();
     const { user } = useUser();
 
     useEffect(() => {
         if (user) {
-            getUsers();
+            fetchUsers();
         }
-    }, [getUsers, user]);
+    }, [fetchUsers, user]);
 
   return (
     <div className='h-full bg-zinc-900 rounded-lg flex flex-col'>
@@ -29,10 +29,8 @@ const ChatComponent = () => {
 			<ScrollArea className='flex-1'>
 				<div className='p-4 space-y-4'>
 					{users.map((user) => {
-						// const activity = userActivities.get(user.clerkId);
-						// const isPlaying = activity && activity !== "Idle";
-                        const isPlaying = false;
-                        const activity = "Idle";
+						const activity = userActivities.get(user.clerkId);
+						const isPlaying = activity && activity !== "Idle";
 
 						return (
 							<div
@@ -41,7 +39,7 @@ const ChatComponent = () => {
 							>
 								<div className='flex items-start gap-3'>
 									<div className='relative'>
-										{/* <Avatar className='size-10 border border-zinc-800'>
+										<Avatar className='size-10 border border-zinc-800'>
 											<AvatarImage src={user.imageUrl} alt={user.fullName} />
 											<AvatarFallback>{user.fullName[0]}</AvatarFallback>
 										</Avatar>
@@ -50,7 +48,7 @@ const ChatComponent = () => {
 												${onlineUsers.has(user.clerkId) ? "bg-green-500" : "bg-zinc-500"}
 												`}
 											aria-hidden='true'
-										/> */}
+										/>
 									</div>
 
 									<div className='flex-1 min-w-0'>

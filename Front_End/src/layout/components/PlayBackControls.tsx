@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 const PlayBackControls = () => {
     const { currentSong, isPlaying, togglePlay, playNext, playPrevious } = UsePlayerStore();
 
-    const [volume, setVolume] = useState(40);
+    const [volume, setVolume] = useState(10);
 	const [currentTime, setCurrentTime] = useState(0);
 	const [duration, setDuration] = useState(0);
     const audioRef = React.useRef<HTMLAudioElement>(null);
@@ -18,6 +18,7 @@ const PlayBackControls = () => {
 
         const audio = audioRef.current;
         if (!audio) return;
+        audio.volume = volume / 100;
 
         const updateCurrentTime = () => {
             setCurrentTime(audio.currentTime);
@@ -41,7 +42,7 @@ const PlayBackControls = () => {
             audio.removeEventListener('ended', handleSongEnd);
         }
 
-    }, [currentSong]);
+    }, [currentSong, volume]);
 
     const handleSeek = (value: number[]) => {
         if (audioRef.current) {

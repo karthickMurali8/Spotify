@@ -1,5 +1,6 @@
 import type { Song } from "@/types";
 import { create } from "zustand";
+import { UseChatStore } from "./UseChatStore";
 
 
 interface PlayerStore {
@@ -29,6 +30,16 @@ export const UsePlayerStore = create<PlayerStore>((set, get) => ({
         const queue = get().queue;
         const songIndex = queue.findIndex((s) => s._id === song._id);
 
+        const socket = UseChatStore.getState().socket;
+        if (socket.auth) {
+            socket.emit("update_activity",
+                { 
+                    userId: socket.auth.userId,
+                    activity: `Playing ${song.title} by ${song.artist}`
+                }
+            );
+        }
+
         // if (songIndex === -1) return;
 
         set({
@@ -39,26 +50,64 @@ export const UsePlayerStore = create<PlayerStore>((set, get) => ({
     },
 
     togglePlay: () => {
-        set({ isPlaying: !get().isPlaying });
-    },
+		const willStartPlaying = !get().isPlaying;
+
+		const currentSong = get().currentSong;
+		const socket = UseChatStore.getState().socket;
+		if (socket.auth) {
+			socket.emit("update_activity", {
+				userId: socket.auth.userId,
+				activity:
+					willStartPlaying && currentSong ? `Playing ${currentSong.title} by ${currentSong.artist}` : "Idle",
+			});
+		}
+
+		set({
+			isPlaying: willStartPlaying,
+		});
+	},
 
     playNext: () => {
         const { queue, currentIndex } = get();
-        if (currentIndex < queue.length - 1) {
-            const nextSong = queue[currentIndex + 1];
-            set({ currentSong: nextSong, currentIndex: currentIndex + 1, isPlaying: true });
-        } else {
-            set({ currentIndex: 0, currentSong: queue[0], isPlaying: true });
+        const nextIndex = (currentIndex < queue.length - 1) ? currentIndex + 1 : 0;
+        const nextSong = queue[nextIndex];
+
+        set({ currentIndex: nextIndex, currentSong: nextSong, isPlaying: true });
+
+        const socket = UseChatStore.getState().socket;
+        if (socket.auth) {
+            socket.emit("update_activity",
+                { 
+                    userId: socket.auth.userId,
+                    activity: `Playing ${nextSong.title} by ${nextSong.artist}`
+                }
+            );
         }
     },
 
     playPrevious: () => {
+        // const { queue, currentIndex } = get();
+        // if (currentIndex > 0) {
+        //     const prevSong = queue[currentIndex - 1];
+        //     set({ currentSong: prevSong, currentIndex: currentIndex - 1, isPlaying: true });
+        // } else {
+        //     set({ currentIndex: queue.length - 1, currentSong: queue[queue.length - 1], isPlaying: true });
+        // }
+
         const { queue, currentIndex } = get();
-        if (currentIndex > 0) {
-            const prevSong = queue[currentIndex - 1];
-            set({ currentSong: prevSong, currentIndex: currentIndex - 1, isPlaying: true });
-        } else {
-            set({ currentIndex: queue.length - 1, currentSong: queue[queue.length - 1], isPlaying: true });
+        const prevIndex = (currentIndex > 0) ? currentIndex - 1 : queue.length - 1;
+        const prevSong = queue[prevIndex];
+
+        set({ currentIndex: prevIndex, currentSong: prevSong, isPlaying: true });
+
+        const socket = UseChatStore.getState().socket;
+        if (socket.auth) {
+            socket.emit("update_activity",
+                {
+                    userId: socket.auth.userId,
+                    activity: `Playing ${prevSong.title} by ${prevSong.artist}`
+                }
+            );
         }
     },
 
@@ -66,6 +115,17 @@ export const UsePlayerStore = create<PlayerStore>((set, get) => ({
         if (album.length === 0) return;
 
         const song = album[startIndex];
+
+        const socket = UseChatStore.getState().socket;
+        if (socket.auth) {
+            socket.emit("update_activity",
+                { 
+                    userId: socket.auth.userId,
+                    activity: `Playing ${song.title} by ${song.artist}`
+                }
+            );
+        }
+
         set({ 
             currentSong: song, 
             isPlaying: true, 

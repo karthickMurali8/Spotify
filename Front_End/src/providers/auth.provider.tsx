@@ -3,6 +3,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import { Loader } from "lucide-react";
 import { UseAuthStore } from "@/stores/UseAuthStore";
+import { UseChatStore } from "@/stores/UseChatStore";
 
 const updateToken = (token: string | null) => {
     if (token) {
@@ -13,9 +14,10 @@ const updateToken = (token: string | null) => {
 }
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-    const { getToken } = useAuth();
+    const { getToken, userId } = useAuth();
     const [loading, setLoading] = useState(true);
     const { checkAdminStatus } = UseAuthStore();
+    const { initSocket, disconnectSocket } = UseChatStore();
 
     useEffect(() => {
         const initAuth = async () => {
@@ -24,6 +26,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 updateToken(token);
                 if (token) {
                     await checkAdminStatus();
+
+                    if (userId) initSocket(userId);
                 }
             } catch (error) {
                 console.error("Error fetching token:", error);
@@ -34,7 +38,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         };
 
         initAuth();
-    }, [getToken]);
+
+        // clean up
+        return () => disconnectSocket();
+
+    }, [getToken, userId, checkAdminStatus, initSocket, disconnectSocket]);
 
     // return <>{children}</>;
 
